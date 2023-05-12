@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-
-import sys
-
+from sys import argv
 from calculator_1 import add, substract, multiply, divide
 
 def calculate(a, operator, b):
@@ -32,15 +30,15 @@ if __name__ ==  "__main__":
 
     # Check the number of arguments
 
-    if len(sys.argv) != 4:
+    if len(argv) != 4:
 
         print("Usage: ./100-my_calculator.py <a> <operator> <b>")
-        sys.exit(1)
+        exit(1)
 
     # Extract the arguments
 
-    b = int(sys.argv[3])
-    a = int(sys.argv[1])
+    b = int(argv[3])
+    a = int(rgv[1])
 
     operator = sys.argv[2]
 
@@ -52,7 +50,7 @@ if __name__ ==  "__main__":
 
         print("Unknown operator. Available operators: +, -, * and /")
 
-        sys.exit(1)
+        exit(1)
 
     # Print the result
 
