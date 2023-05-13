@@ -1,49 +1,49 @@
 #include "lists.h"
 
 /**
- * strlength - returns length of a string
- * @str: string to be assessed
+ * _strlen_recursion - returns length of a string
+ * @s: string to be assessed
  * Return: length of string
  */
 
-int strlength(char *str)
+int _strlen_recursion(char *s)
 {
-	if (*str == '\0')
+	if (*s == '\0')
 		return (0);
-	return (strlength(str + 1) + 1);
+	return (_strlen_recursion(s + 1) + 1);
 }
 
 /**
- * check_palindrome - check if string is a palindrome
- * @str: string to be assessed
+ * check_palin - check if string is a palindrome
+ * @s: string to be assessed
  * @start: first index
  * @end: end index
  * Return: 1 if palindrome, 0 if not palindrome
  */
 
-int check_palindrome(char *str, int start, int end)
+int check_palin(char *s, int start, int end)
 {
-	if (str[start] != str[end])
+	if (s[start] != s[end])
 		return (0);
 	if (start >= end)
 		return (1);
-	return (check_palindrome(str, start + 1, end - 1));
+	return (check_palin(s, start + 1, end - 1));
 }
 
 /**
- * is_palin_str - determine if string is a palindrome
- * @str: string to be assessed
+ * is_palin - determine if string is a palindrome
+ * @s: string to be assessed
  * Return: 1 if string is palindrome and 0 if not
  */
 
-int is_palin_str(char *str)
+int is_palin(char *s)
 {
 	int end;
 
-	if (*str == '\0')
+	if (*s == '\0')
 		return (1);
-	end = strlength(str) - 1;
-	return (check_palindome(str, 0, end));
+	end = _strlen_recursion(s) - 1;
+	return (check_palin(s, 0, end));
 }
 
 /**
@@ -56,39 +56,39 @@ int is_palin_str(char *str)
 int is_palindrome(listint_t **head)
 {
 	listint_t *temp = NULL;
-	listint_t *current = NULL;
-	char *str;
-	int size = 0;
-	int ai = 0;
+	listint_t *p = NULL;
+	char *s;
+	int numNodes = 0;
+	int i = 0;
 
 	if (*head == NULL || head == NULL)
 		return (1);
 
-	current = *head;
-	while (current != NULL)
+	p = *head;
+	while (p != NULL)
 	{
-		current = current->next;
-		size++;
+		p = p->next;
+		numNodes++;
 	}
 
-	str = malloc(sizeof(int) * size);
-	if (str == NULL)
+	s = malloc(sizeof(int) * numNodes);
+	if (s == NULL)
 		return (-1);
 
 	temp = *head;
 
 	while (temp != NULL)
 	{
-		str[ai] = temp->n;
+		s[i] = temp->n;
 		temp = temp->next;
-		ai++;
+		i++;
 	}
 
-	if (is_palin_str(str) == 1)
+	if (is_palin(s) == 1)
 	{
-		free(str);
+		free(s);
 		return (1);
 	}
-	free(str);
+	free(s);
 	return (0);
 }
