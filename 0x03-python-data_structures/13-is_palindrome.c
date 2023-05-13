@@ -1,86 +1,83 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "lists.h"
 
 /**
- *reverse_list - reverses a linked list
- *@head: double pointer to the head of the linked list
+ *is_palindrome - Checks if a singly linked list is a palindrome
+ *@head: The head of the singly linked list
  *
- *Return: pointer to the new head of the reversed list
- */
-listint_t *reverse_list(listint_t **head)
-{
-	listint_t *prev = NULL;
-	listint_t *current = *head;
-	listint_t *next = NULL;
-
-	while (current != NULL)
-	{
-		next = current->next;
-		current->next = prev;
-		prev = current;
-		current = next;
-	}
-	return (prev);
-}
-
-/**
- *is_palindrome - checks if a singly linked list is a palindrome
- *@head: double pointer to the head of the linked list
- *
- *Return: 1 if the list is a palindrome, 0 otherwise
+ *Return: 0 if it is not a palindrome, 1 if it is a palindrome
  */
 int is_palindrome(listint_t **head)
 {
-	if (*head == NULL || (*head)->next == NULL)
+	listint_t *start = NULL, *end = NULL;
+	unsigned int fai = 0, size = 0, bai = 0, rest = 0;
+
+	if (!head)
+		return (0);
+
+	if (!*head)
 		return (1);
 
-	listint_t *slow = *head;
-	listint_t *fast = *head;
-	listint_t *prev_slow = *head;
-	listint_t *mid = NULL;
+	start = *head;
+	size = listint_size(start);
+	bai = size * 2;
+	rest = bai - 2;
+	end = *head;
 
-	/*Find the middle of the list */
-	while (fast != NULL && fast->next != NULL)
+	for (; fai < rest; fai += 2)
 	{
-		fast = fast->next->next;
-		prev_slow = slow;
-		slow = slow->next;
-	}
-
-	/* If the number of nodes is odd, skip the middle node */
-	if (fast != NULL)
-	{
-		mid = slow;
-		slow = slow->next;
-	}
-
-	/*Reverse the second half of the list */
-	slow = reverse_list(&slow);
-	fast = *head;
-
-	/*Compare the first half and reversed second half */
-	listint_t *temp1 = *head;
-	listint_t *temp2 = slow;
-
-	while (temp1 != NULL && temp2 != NULL)
-	{
-		if (temp1->n != temp2->n)
+		if (start[fai].n != end[rest].n)
 			return (0);
-		temp1 = temp1->next;
-		temp2 = temp2->next;
-	}
 
-	/*Restore the original list by reversing the second half again */
-	reverse_list(&slow);
-
-	/* If the number of nodes is odd, set the next pointer of the middle node to NULL */
-	if (mid != NULL)
-	{
-		prev_slow->next = mid;
-		mid->next = slow;
+		rest -= 2;
 	}
-	else
-		prev_slow->next = slow;
 
 	return (1);
+}
+
+/**
+ *get_node - Gets a node from a linked list
+ *@head: The head of the linked list
+ *@index: The index to find in the linked list
+ *
+ *Return: The specific node of the linked list
+ */
+listint_t *get_node(listint_t *head, unsigned int index)
+{
+	listint_t *current = head;
+	unsigned int ai = 0;
+
+	if (head)
+	{
+		while (current)
+		{
+			if (ai == index)
+				return (current);
+
+			current = current->next;
+			++ai;
+		}
+	}
+
+	return (NULL);
+}
+
+/**
+ *listint_size - Counts the number of elements in a linked list
+ *@head: The linked list to count
+ *
+ *Return: Number of elements in the linked list
+ */
+size_t listint_size(const listint_t *head)
+{
+	int size = 0;
+
+	while (head)
+	{
+		++size;
+		head = head->next;
+	}
+
+	return (size);
 }
