@@ -37,33 +37,6 @@ int is_palindrome(listint_t **head)
 }
 
 /**
- *get_node - Gets a node from a linked list
- *@head: The head of the linked list
- *@index: The index to find in the linked list
- *
- *Return: The specific node of the linked list
- */
-listint_t *get_node(listint_t *head, unsigned int index)
-{
-	listint_t *current = head;
-	unsigned int ai = 0;
-
-	if (head)
-	{
-		while (current)
-		{
-			if (ai == index)
-				return (current);
-
-			current = current->next;
-			++ai;
-		}
-	}
-
-	return (NULL);
-}
-
-/**
  *listint_size - Counts the number of elements in a linked list
  *@head: The linked list to count
  *
