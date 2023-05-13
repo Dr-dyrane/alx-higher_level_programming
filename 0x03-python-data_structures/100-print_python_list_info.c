@@ -11,7 +11,7 @@
 void print_python_list_info(PyObject *p)
 {
 	PyObject *object;
-	Py_ssize_t ai, size;
+	int ai, size;
 
 	size = Py_SIZE(p);
 
