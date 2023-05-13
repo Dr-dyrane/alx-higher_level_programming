@@ -9,12 +9,9 @@
  */
 listint_t *reverse_list(listint_t **head)
 {
-	if (*head == NULL || (*head)->next == NULL)
-		return (*head);
-
 	listint_t *prev = NULL;
 	listint_t *current = *head;
-	listint_t *next;
+	listint_t *next = NULL;
 
 	while (current != NULL)
 	{
@@ -23,9 +20,6 @@ listint_t *reverse_list(listint_t **head)
 		prev = current;
 		current = next;
 	}
-
-	*head = prev;
-
 	return (prev);
 }
 
@@ -42,20 +36,31 @@ int is_palindrome(listint_t **head)
 
 	listint_t *slow = *head;
 	listint_t *fast = *head;
+	listint_t *prev_slow = *head;
+	listint_t *mid = NULL;
 
 	/*Find the middle of the list */
 	while (fast != NULL && fast->next != NULL)
 	{
 		fast = fast->next->next;
+		prev_slow = slow;
+		slow = slow->next;
+	}
+
+	/* If the number of nodes is odd, skip the middle node */
+	if (fast != NULL)
+	{
+		mid = slow;
 		slow = slow->next;
 	}
 
 	/*Reverse the second half of the list */
-	listint_t *reversed = reverse_list(&slow);
+	slow = reverse_list(&slow);
+	fast = *head;
 
 	/*Compare the first half and reversed second half */
 	listint_t *temp1 = *head;
-	listint_t *temp2 = reversed;
+	listint_t *temp2 = slow;
 
 	while (temp1 != NULL && temp2 != NULL)
 	{
@@ -66,7 +71,16 @@ int is_palindrome(listint_t **head)
 	}
 
 	/*Restore the original list by reversing the second half again */
-	reverse_list(&reversed);
+	reverse_list(&slow);
+
+	/* If the number of nodes is odd, set the next pointer of the middle node to NULL */
+	if (mid != NULL)
+	{
+		prev_slow->next = mid;
+		mid->next = slow;
+	}
+	else
+		prev_slow->next = slow;
 
 	return (1);
 }
