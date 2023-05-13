@@ -20,8 +20,7 @@ listint_t *add_nodeint_end(listint_t **head, const int n);
 void free_listint(listint_t *head);
 
 /* Is palindrome Function prototypes */
+listint_t *reverse_list(listint_t **head);
 int is_palindrome(listint_t **head);
-void stack_push(listint_t **stack, int value);
-int stack_pop(listint_t **stack);
 
 #endif /* LISTS_H */

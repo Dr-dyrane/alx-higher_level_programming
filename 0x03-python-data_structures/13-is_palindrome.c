@@ -1,49 +1,32 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "lists.h"
 
 /**
- *stack_push - pushes a value onto the stack
- *@stack: double pointer to the top of the stack
- *@value: value to be pushed
+ *reverse_list - reverses a linked list
+ *@head: double pointer to the head of the linked list
  *
- *Return: pointer to the updated top of the stack
+ *Return: pointer to the new head of the reversed list
  */
-void stack_push(listint_t **stack, int value)
+listint_t *reverse_list(listint_t **head)
 {
-	listint_t *new_node = malloc(sizeof(listint_t));
+	if (*head == NULL || (*head)->next == NULL)
+		return (*head);
 
-	if (new_node == NULL)
+	listint_t *prev = NULL;
+	listint_t *current = *head;
+	listint_t *next;
+
+	while (current != NULL)
 	{
-		fprintf(stderr, "Error: Failed to allocate memory\n");
-		exit(EXIT_FAILURE);
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
 	}
 
-	new_node->n = value;
-	new_node->next = *stack;
-	*stack = new_node;
-}
+	*head = prev;
 
-/**
- *stack_pop - pops a value from the stack
- *@stack: double pointer to the top of the stack
- *
- *Return: the popped value
- */
-int stack_pop(listint_t **stack)
-{
-	if (*stack == NULL)
-	{
-		fprintf(stderr, "Error: Stack is empty\n");
-		exit(EXIT_FAILURE);
-	}
-
-	int value = (*stack)->n;
-	listint_t *temp = *stack;
-	*stack = (*stack)->next;
-	free(temp);
-
-	return (value);
+	return (prev);
 }
 
 /**
@@ -54,34 +37,36 @@ int stack_pop(listint_t **stack)
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *slow = *head;
-	listint_t *fast = *head;
-	listint_t *stack = NULL;
-
 	if (*head == NULL || (*head)->next == NULL)
 		return (1);
 
-	/*Push the first half of the linked list onto the stack */
+	listint_t *slow = *head;
+	listint_t *fast = *head;
+
+	/*Find the middle of the list */
 	while (fast != NULL && fast->next != NULL)
 	{
-		stack_push(&stack, slow->n);
-		slow = slow->next;
 		fast = fast->next->next;
+		slow = slow->next;
 	}
 
-	/*If the linked list has odd number of nodes, skip the middle element */
-	if (fast != NULL)
-		slow = slow->next;
+	/*Reverse the second half of the list */
+	listint_t *reversed = reverse_list(&slow);
 
-	/*Compare the second half of the linked list with the values in the stack */
-	while (slow != NULL)
+	/*Compare the first half and reversed second half */
+	listint_t *temp1 = *head;
+	listint_t *temp2 = reversed;
+
+	while (temp1 != NULL && temp2 != NULL)
 	{
-		int value = stack_pop(&stack);
-
-		if (slow->n != value)
+		if (temp1->n != temp2->n)
 			return (0);
-		slow = slow->next;
+		temp1 = temp1->next;
+		temp2 = temp2->next;
 	}
+
+	/*Restore the original list by reversing the second half again */
+	reverse_list(&reversed);
 
 	return (1);
 }
