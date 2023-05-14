@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include "lists.h"
 
 /**
@@ -10,61 +9,42 @@
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *start = NULL, *end = NULL;
-	unsigned int fai = 0, size = 0, bai = 0, rest = 0;
-
+	/*Declare variables */
+	listint_t *jagger = NULL; /*Forward pointer */
+	listint_t *hendrix = NULL; /*Backward pointer */
+	listint_t *plant = NULL; /*Previous pointer */
+	listint_t *page = NULL; /*Temporary pointer */
+	listint_t *bono = NULL; /*Middle pointer */
 	/*Check for invalid input */
 	if (!head)
 		return (0);
-
-	/*Empty list is considered a palindrome */
+	/*Check for an empty list (considered a palindrome) */
 	if (!*head)
 		return (1);
-
-	/*Assign the value of head to start pointer */
-	start = *head;
-	/*Calculate the number of elements in the linked list and assign it to size */
-	size = listint_size(start);
-	/*Multiply the size by 2 and assign it to bai (used for backward iteration) */
-	bai = size * 2;
-	/*Subtract 2 from bai and assign it to rest (used for forward iteration) */
-	rest = bai - 2;
-	/*Assign the value of head to end pointer */
-	end = *head;
-
-	/*Compare elements from both ends of the list */
-	for (; fai < rest; fai += 2)
+	/*Initialize the forward and backward pointers */
+	jagger = hendrix = *head;
+	/*Iterate forward and backward simultaneously */
+	while (jagger && jagger->next)
 	{
-		/*If values don't match, it's not a palindrome */
-		if (start[fai].n != end[rest].n)
-			return (0);
+		/*Move the pointers forward and backward */
+		jagger = jagger->next->next;
+		page = hendrix;
+		hendrix = hendrix->next;
+		page->next = plant;
+		plant = page;
+	}
+	/*Adjust the pointers if the list has an odd number of elements */
+	bono = jagger ? hendrix->next : hendrix;
+	/*Compare the elements of the two halves */
+	while (plant && bono)
+	{
+		if (plant->n != bono->n)
+			return (0); /*Not a palindrome */
 
-		rest -= 2;
+		plant = plant->next;
+		bono = bono->next;
 	}
 
-	/*All elements compared, it's a palindrome */
+	/*All elements compared, it is a palindrome */
 	return (1);
-}
-
-/**
- *listint_size - Counts the number of elements in a linked list
- *@head: The linked list to count
- *
- *Return: Number of elements in the linked list
- */
-size_t listint_size(const listint_t *head)
-{
-	int size = 0;
-
-	/*Traverse the linked list and count the elements */
-	while (head)
-	{
-		/*Increase the size counter */
-		++size;
-
-		/*Move to the next node */
-		head = head->next;
-	}
-
-	return (size);
 }
