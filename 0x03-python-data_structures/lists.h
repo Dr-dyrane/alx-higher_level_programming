@@ -21,6 +21,5 @@ void free_listint(listint_t *head);
 
 /* Is palindrome Function prototypes */
 int is_palindrome(listint_t **head);
-size_t listint_size(const listint_t *head);
 
 #endif /* LISTS_H */
