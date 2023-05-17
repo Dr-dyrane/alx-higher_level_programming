@@ -1,98 +1,59 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "/usr/include/python3.4/Python.h"
+#include <stdio.h>
 
-void print_hexn(const char *str, int n);
-void print_python_bytes(PyObject *p);
-
-/**
- *print_python_list - Print some basic info about Python lists
- *@p: PyObject representing the Python list
- *
- *Return: Nothing
- */
-void print_python_list(PyObject *p)
-{
-	PyObject *object;
-	int ai, size;
-
-	/*Get the size of the Python list */
-	size = Py_SIZE(p);
-	printf("[*] Size of the Python List = %d\n", size);
-
-	/*Print the allocated space for the list */
-	printf("[*] Allocated = %ld\n", ((PyListObject *)p)->allocated);
-
-	/*Iterate over the list elements */
-	for (ai = 0; ai < size; ai++)
-	{
-		/*Get the object at the current index */
-		object = PyList_GetItem(p, ai);
-		printf("Element %d: %s\n", ai, Py_TYPE(object)->tp_name);
-
-		/*Check if the object is of type PyBytesObject */
-		if (PyBytes_Check(object))
-			print_python_bytes(object);
-	
-	}
-}
-
-/**
- *print_hexn - Print the hexadecimal representation of a string up to n bytes
- *@str: The input string
- *@n: Number of bytes to print
- *
- *Return: Nothing
- */
 void print_hexn(const char *str, int n)
 {
-	int ai;
+	int i = 0;
 
-	printf("  ");
+	for (; i < n - 1; ++i)
+		printf("%02x ", (unsigned char) str[i]);
 
-	/*Iterate over the string bytes */
-	for (ai = 0; ai < n; ai++)
-	{
-		/*Print the hexadecimal representation of each byte */
-		printf("%02x", (unsigned char) str[ai]);
-
-		/*Add a space between bytes, except for the last byte */
-		if (ai < n - 1)
-			printf(" ");
-	}
-
-	printf("\n");
+	printf("%02x", str[i]);
 }
 
-/**
- *print_python_bytes - Print the information of a Python bytes object
- *@p: PyObject representing the Python bytes object
- *
- *Return: Nothing
- */
 void print_python_bytes(PyObject *p)
 {
-	int size;
-	char *str;
+	PyBytesObject *clone = (PyBytesObject *) p;
+	int calc_bytes, clone_size = 0;
 
 	printf("[.] bytes object info\n");
-
-	/*Check if the object is a valid PyBytesObject */
-	if (!PyBytes_Check(p))
+	if (PyBytes_Check(clone))
 	{
-		printf(" [ERROR] Invalid Bytes Object\n");
-		return;
+		clone_size = PyBytes_Size(p);
+		calc_bytes = clone_size + 1;
+
+		if (calc_bytes >= 10)
+			calc_bytes = 10;
+
+		printf("  size: %d\n", clone_size);
+		printf("  trying string: %s\n", clone->ob_sval);
+		printf("  first %d bytes: ", calc_bytes);
+		print_hexn(clone->ob_sval, calc_bytes);
+		printf("\n");
 	}
+	else
+	{
+		printf("  [ERROR] Invalid Bytes Object\n");
+	}
+}
 
-	/*Get the size and string representation of the bytes object */
-	size = PyBytes_Size(p);
-	str = PyBytes_AsString(p);
+void print_python_list(PyObject *p)
+{
+	int i = 0, list_len = 0;
+	PyObject *item;
+	PyListObject *clone = (PyListObject *) p;
 
-	/*Print the size and string representation */
-	printf("  size: %ld\n", size);
-	printf("  trying string: %s\n", str);
+	printf("[*] Python list info\n");
+	list_len = PyList_GET_SIZE(p);
+	printf("[*] Size of the Python List = %d\n", list_len);
+	printf("[*] Allocated = %d\n", (int) clone->allocated);
 
-	/*Print the hexadecimal representation of the first bytes */
-	printf("  first %ld bytes: ", size < 10 ? size : 10);
-	print_hexn(str, size < 10 ? size : 10);
+	for (; i < list_len; ++i)
+	{
+		item = PyList_GET_ITEM(p, i);
+		printf("Element %d: %s\n", i, item->ob_type->tp_name);
+
+		if (PyBytes_Check(item))
+			print_python_bytes(item);
+	}
 }
