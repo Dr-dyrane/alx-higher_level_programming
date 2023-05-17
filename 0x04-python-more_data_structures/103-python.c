@@ -1,60 +1,82 @@
-#include "/usr/include/python3.4/Python.h"
 #include <stdio.h>
-
+#include <stdlib.h>
+#include "/usr/include/python3.4/Python.h"
+/**
+ *print_hexn - Print the hexadecimal representation of a string up to n bytes
+ *@str: The input string
+ *@n: Number of bytes to print
+ *
+ *Return: Nothing
+ */
 void print_hexn(const char *str, int n)
 {
-	int jerry = 0;
-
-	do {
-		printf("%02x ", (unsigned char) str[jerry]);
-		jerry++;
-	} while (jerry < n - 1);
-
-	printf("%02x", str[jerry]);
+	int ai;
+	/*Iterate over the string bytes */
+	for (ai = 0; ai < n - 1; ai++)
+		/*Print the hexadecimal representation of each byte */
+		printf("%02x ", (unsigned char) str[ai]);
+	printf("%02x", str[i]);
+	printf("\n");
 }
-
+/**
+ *print_python_bytes - Print the information of a Python bytes object
+ *@p: PyObject representing the Python bytes object
+ *
+ *Return: Nothing
+ */
 void print_python_bytes(PyObject *p)
 {
-	PyBytesObject *morty_clone = (PyBytesObject *) p;
-	int morty_bytes, clone_size = 0;
+	int size, bytes;
 
 	printf("[.] bytes object info\n");
-	if (PyBytes_Check(morty_clone))
+
+	/*Check if the object is a valid PyBytesObject */
+	if (!PyBytes_Check(p))
 	{
-		clone_size = PyBytes_Size(p);
-		morty_bytes = clone_size + 1;
-
-		if (morty_bytes >= 10)
-			morty_bytes = 10;
-
-		printf("  size: %d\n", clone_size);
-		printf("  trying string: %s\n", morty_clone->ob_sval);
-		printf("  first %d bytes: ", morty_bytes);
-		print_hexn(morty_clone->ob_sval, morty_bytes);
-		printf("\n");
+		printf(" [ERROR] Invalid Bytes Object\n");
+		return;
 	}
-	else
-		printf("[ERROR] Invalid Bytes Object\n");
-}
 
+	/*Get the size and string representation of the bytes object */
+	size = PyBytes_Size(p);
+	bytes = size + 1;
+
+	/*Print the size and string representation */
+	printf("  size: %d\n", size);
+	printf("  trying string: %s\n", ((PyListObject *)p)->ob_sval);
+
+	/*Print the hexadecimal representation of the first bytes */
+	printf("  first %d bytes: ", bytes);
+	print_hexn(((PyListObject *)p)->ob_sval, bytes);
+}
+/**
+ *print_python_list - Print some basic info about Python lists
+ *@p: PyObject representing the Python list
+ *
+ *Return: Nothing
+ */
 void print_python_list(PyObject *p)
 {
-	int morty = 0, morty_list_len = 0;
-	PyObject *item;
-	PyListObject *morty_clone = (PyListObject *) p;
+	PyObject *object;
+	int ai, size;
 
 	printf("[*] Python list info\n");
-	morty_list_len = PyList_GET_SIZE(p);
-	printf("[*] Size of the Python List = %d\n", morty_list_len);
-	printf("[*] Allocated = %d\n", (int) morty_clone->allocated);
+	/*Get the size of the Python list */
+	size = PyList_GET_SIZE(p);
+	printf("[*] Size of the Python List = %d\n", size);
 
-	do {
-		item = PyList_GET_ITEM(p, morty);
-		printf("Element %d: %s\n", morty, item->ob_type->tp_name);
+	/*Print the allocated space for the list */
+	printf("[*] Allocated = %ld\n", ((PyListObject *)p)->allocated);
 
-		if (PyBytes_Check(item))
-			print_python_bytes(item);
+	/*Iterate over the list elements */
+	for (ai = 0; ai < size; ai++)
+	{
+		/*Get the object at the current index */
+		object = PyList_GET_ITEM(p, ai);
+		printf("Element %d: %s\n", ai, Py_TYPE(object)->tp_name);
 
-		morty++;
-	} while (morty < morty_list_len);
+		/*Check if the object is of type PyBytesObject */
+		if (PyBytes_Check(object))
+			print_python_bytes(object);
+	}
 }
