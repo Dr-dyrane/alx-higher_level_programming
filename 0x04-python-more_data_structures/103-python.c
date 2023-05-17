@@ -15,7 +15,7 @@ void print_hexn(const char *str, int n)
 
 void print_python_bytes(PyObject *p)
 {
-	PyBytesObject *morty_clone = (PyBytesObject*) p;
+	PyBytesObject *morty_clone = (PyBytesObject *) p;
 	int morty_bytes, clone_size = 0;
 
 	printf("[.] bytes object info\n");
@@ -40,8 +40,8 @@ void print_python_bytes(PyObject *p)
 void print_python_list(PyObject *p)
 {
 	int morty = 0, morty_list_len = 0;
-	PyObject * item;
-	PyListObject *morty_clone = (PyListObject*) p;
+	PyObject *item;
+	PyListObject *morty_clone = (PyListObject *) p;
 
 	printf("[*] Python list info\n");
 	morty_list_len = PyList_GET_SIZE(p);
