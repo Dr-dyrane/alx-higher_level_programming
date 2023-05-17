@@ -11,4 +11,13 @@ def weight_average(my_list=[]):
         float: The weighted average of the integers.
                Returns 0 if the list is empty.
     """
-    return sum(score * weight for score, weight in my_list) / sum(weight for _, weight in my_list) if my_list else 0
+    if not my_list:
+        return 0
+
+    total_score = total_weight = 0
+
+    for score, weight in my_list:
+        total_score += score * weight
+        total_weight += weight
+
+    return total_score / total_weight if total_weight != 0 else 0
