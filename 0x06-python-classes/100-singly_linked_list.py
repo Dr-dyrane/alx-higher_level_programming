@@ -41,7 +41,7 @@ class Node:
         Raises:
             TypeError: If value is not an integer.
         """
-        if type(value) != int:
+        if not isinstance(value, int):
             raise TypeError("data must be an integer")
         else:
             self.__data = value
@@ -67,7 +67,7 @@ class Node:
         Raises:
             TypeError: If value is not None or a Node object.
         """
-        if value is not None and type(value) != Node:
+        if value is not None and not isinstance(value, Node):
             raise TypeError("next_node must be a Node object")
         else:
             self.__next_node = value
@@ -95,6 +95,7 @@ class SinglyLinkedList:
 
         if self.head is None:
             # List is empty, set the new node as the head
+            new_node.next_node = None
             self.head = new_node
         elif value < self.head.data:
             # New node becomes the new head
