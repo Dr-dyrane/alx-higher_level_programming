@@ -22,7 +22,7 @@ def add_integer(a, b):
                    If b is a float, it will be casted to an integer.
     """
     if type(a) not in (int, float):
-        raise TypeError("a must be an integer or float")
+        raise TypeError("a must be an integer")
     if type(b) not in (int, float):
-        raise TypeError("b must be an integer or float")
+        raise TypeError("b must be an integer")
     return int(a) + int(b)
