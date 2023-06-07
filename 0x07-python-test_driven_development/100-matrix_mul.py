@@ -1,50 +1,59 @@
 #!/usr/bin/python3
-"""This module contains a function that multiplies two matrices"""
+"""
+This module contains a function that multiplies two matrices.
+"""
 
 
 def matrix_mul(m_a, m_b):
     """
-    Multiply two matrices and return the resulting matrix.
-    """
+    Multiplies two matrices.
 
-    validate_matrix(m_a, "m_a")
-    validate_matrix(m_b, "m_b")
+    Args:
+        m_a (list of lists): First matrix.
+        m_b (list of lists): Second matrix.
+
+    Returns:
+        list of lists: Result of matrix multiplication.
+
+    Raises:
+        TypeError: If m_a or m_b is not a list or a list of lists.
+        ValueError: If m_a or m_b is empty, or matrices cannot be multiplied.
+        TypeError: If m_a or m_b contains elements other than integers or floats.
+        TypeError: If rows of m_a or m_b are not of the same size.
+
+    """
+    if not isinstance(m_a, list) or not isinstance(m_b, list):
+        raise TypeError("m_a must be a list or m_b must be a list")
+
+    if not all(isinstance(row, list) for row in m_a) or not all(isinstance(row, list) for row in m_b):
+        raise TypeError(
+            "m_a must be a list of lists or m_b must be a list of lists")
+
+    if m_a == [] or any(row == [] for row in m_a) or m_b == [] or any(row == [] for row in m_b):
+        raise ValueError("m_a can't be empty or m_b can't be empty")
+
+    if not all(isinstance(num, (int, float)) for row in m_a for num in row) or \
+       not all(isinstance(num, (int, float)) for row in m_b for num in row):
+        raise TypeError(
+            "m_a should contain only integers or floats or m_b should contain only integers or floats")
+
+    if len(set(len(row) for row in m_a)) != 1 or len(set(len(row) for row in m_b)) != 1:
+        raise ValueError(
+            "each row of m_a must be of the same size or each row of m_b must be of the same size")
 
     if len(m_a[0]) != len(m_b):
         raise ValueError("m_a and m_b can't be multiplied")
 
-    result = []
+    # Perform matrix multiplication
+    num_rows_a = len(m_a)
+    num_cols_a = len(m_a[0])
+    num_cols_b = len(m_b[0])
 
-    for i in range(len(m_a)):
-        row = []
-        for j in range(len(m_b[0])):
-            sum = 0
-            for k in range(len(m_b)):
-                sum += m_a[i][k] * m_b[k][j]
-            row.append(sum)
-        result.append(row)
+    result = [[0 for _ in range(num_cols_b)] for _ in range(num_rows_a)]
+
+    for i in range(num_rows_a):
+        for j in range(num_cols_b):
+            for k in range(num_cols_a):
+                result[i][j] += m_a[i][k] * m_b[k][j]
 
     return result
-
-
-def validate_matrix(matrix, name):
-    """
-    Validate the given matrix according to the requirements.
-    """
-
-    if not isinstance(matrix, list):
-        raise TypeError("{} must be a list".format(name))
-
-    if not all(isinstance(row, list) for row in matrix):
-        raise TypeError("{} must be a list of lists".format(name))
-
-    if len(matrix) == 0 or any(len(row) == 0 for row in matrix):
-        raise ValueError("{} can't be empty".format(name))
-
-    for row in matrix:
-        if not all(isinstance(element, (int, float)) for element in row):
-            raise TypeError(
-                "{} should contain only integers or floats".format(name))
-
-    if len(set(len(row) for row in matrix)) > 1:
-        raise TypeError("each row of {} must be of the same size".format(name))
