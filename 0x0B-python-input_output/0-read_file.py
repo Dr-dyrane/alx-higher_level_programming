@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-#Alexander Udeogaranya
+"""
+Alexander Udeogaranya
+"""
 """
 Contains the read_file function
 """
