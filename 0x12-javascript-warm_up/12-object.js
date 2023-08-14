@@ -24,4 +24,3 @@ myObject.value = 89;
 
 // Display the object after modification.
 console.log(myObject);
-
