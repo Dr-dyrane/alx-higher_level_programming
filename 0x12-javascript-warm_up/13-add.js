@@ -6,7 +6,4 @@
  * @param {number} b - The second integer.
  * @returns {number} The sum of a and b.
  */
-export default function add(a, b) {
-    return a + b;
-  }
-  
+exports.add = (a, b) => a + b;
