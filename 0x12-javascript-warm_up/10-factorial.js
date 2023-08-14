@@ -5,7 +5,7 @@
  * @param {number} n - The integer for which to calculate the factorial.
  * @returns {number} The factorial of the given integer.
  */
-function factorial(n) {
+function factorial (n) {
   // Base case: factorial of 0 is 1.
   if (n === 0 || isNaN(n)) {
     return 1;
