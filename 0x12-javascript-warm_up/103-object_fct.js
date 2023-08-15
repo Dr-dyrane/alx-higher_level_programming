@@ -11,7 +11,6 @@
 /**
  * The main script logic.
  */
-(function () {
   // Initialize myObject with an initial type and value.
   const myObject = {
     type: 'object',
@@ -38,7 +37,12 @@
 
   // Call the incr() method again to further increment the value.
   myObject.incr();
+ 
+  // Print the updated state of myObject.
+  console.log(myObject);
+
+  //Call the incr() method again to further increment the value.
+  myObject.incr();
 
   // Print the final state of myObject after multiple increments.
   console.log(myObject);
-})();
