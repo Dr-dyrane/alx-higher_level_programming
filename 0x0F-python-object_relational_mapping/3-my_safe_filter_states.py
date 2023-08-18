@@ -34,42 +34,42 @@ their IDs in ascending order and printed to the console.
 import MySQLdb as db
 from sys import argv
 
-def filter_states_by_name(db_username, db_password, db_name, state_name):
-    """
-    Retrieves and lists states from the specified database
-    that match the provided state name filter.
-
-    Args:
-        db_username (str): Username for database access.
-        db_password (str): Password for database access.
-        db_name (str): Name of the database to connect to.
-        state_name (str): The state name or a partial name to filter.
-
-    Returns:
-        None
-    """
-    db_connect = db.connect(
-        host="localhost",
-        port=3306,
-        user=db_username,
-        passwd=db_password,
-        db=db_name
-    )
-    db_cursor = db_connect.cursor()
-
-    query = "SELECT * FROM states WHERE name LIKE BINARY %(name)s \
-             ORDER BY states.id ASC"
-
-    params = {'name': state_name}
-
-    db_cursor.execute(query, params)
-
-    rows_selected = db_cursor.fetchall()
-
-    for row in rows_selected:
-        print(row)
-
 if __name__ == "__main__":
+    def filter_states_by_name(db_username, db_password, db_name, state_name):
+        """
+        Retrieves and lists states from the specified database
+        that match the provided state name filter.
+
+        Args:
+            db_username (str): Username for database access.
+            db_password (str): Password for database access.
+            db_name (str): Name of the database to connect to.
+            state_name (str): The state name or a partial name to filter.
+
+        Returns:
+            None
+        """
+        db_connect = db.connect(
+            host="localhost",
+            port=3306,
+            user=db_username,
+            passwd=db_password,
+            db=db_name
+        )
+        db_cursor = db_connect.cursor()
+
+        query = "SELECT * FROM states WHERE name LIKE BINARY %(name)s \
+                ORDER BY states.id ASC"
+
+        params = {'name': state_name}
+
+        db_cursor.execute(query, params)
+
+        rows_selected = db_cursor.fetchall()
+
+        for row in rows_selected:
+            print(row)
+
     if len(argv) != 5:
         print("Usage: ./3-my_safe_filter_states.py <db_username> "
               "<db_password> <db_name> <state_name>")
