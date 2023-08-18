@@ -54,16 +54,13 @@ def list_cities_with_states(db_username, db_password, db_name):
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    states = session.query(State).join(City).order_by(City.id).all()
+    states = session.query(State).outerjoin(City).order_by(City.id).all()
 
     for state in states:
+        print("{}: {}".format(state.id, state.name))
         for city in state.cities:
-            print("{}: {} -> {}".format(city.id, city.name, state.name))
+            print("    {}: {}".format(city.id, city.name))
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: ./101-relationship_states_cities_list.py <db_username> "
-              "<db_password> <db_name>")
-    else:
-        db_username, db_password, db_name = sys.argv[1:4]
-        list_cities_with_states(db_username, db_password, db_name)
+    db_username, db_password, db_name = sys.argv[1:4]
+    list_cities_with_states(db_username, db_password, db_name)
