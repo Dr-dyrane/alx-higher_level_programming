@@ -59,3 +59,4 @@ if __name__ == '__main__':
               "<db_password> <db_name>")
     else:
         list_states(argv[1], argv[2], argv[3])
+
