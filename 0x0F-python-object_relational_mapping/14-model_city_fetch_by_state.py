@@ -38,7 +38,8 @@ from sqlalchemy.orm import sessionmaker
 if __name__ == "__main__":
     def fetch_and_print_cities(db_username, db_password, db_name):
         """
-        Retrieves and prints all City objects along with their corresponding State objects.
+        Retrieves and prints all City objects along with their 
+        corresponding State objects.
 
         Args:
             db_username (str): Username for database access.
