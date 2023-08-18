@@ -36,48 +36,48 @@ Explanation:
 import MySQLdb as db
 from sys import argv
 
-def list_cities_by_state(db_username, db_password, db_name, state_name):
-    """
-    Retrieves and lists cities of the specified state from the database.
-
-    Args:
-        db_username (str): Username for database access.
-        db_password (str): Password for database access.
-        db_name (str): Name of the database to connect to.
-        state_name (str): The name of the state to filter cities by.
-
-    Returns:
-        None
-    """
-    db_connect = db.connect(
-        host="localhost",
-        port=3306,
-        user=db_username,
-        passwd=db_password,
-        db=db_name
-    )
-
-    with db_connect.cursor() as db_cursor:
-        db_cursor.execute("""
-            SELECT
-                cities.id, cities.name
-            FROM
-                cities
-            JOIN
-                states
-            ON
-                cities.state_id = states.id
-            WHERE
-                states.name LIKE BINARY %(state_name)s
-            ORDER BY
-                cities.id ASC
-        """, {
-            'state_name': state_name
-        })
-        rows_selected = db_cursor.fetchall()
-
-    if rows_selected is not None:
-        print(", ".join([row[1] for row in rows_selected]))
-
 if __name__ == "__main__":
+    def list_cities_by_state(db_username, db_password, db_name, state_name):
+        """
+        Retrieves and lists cities of the specified state from the database.
+
+        Args:
+            db_username (str): Username for database access.
+            db_password (str): Password for database access.
+            db_name (str): Name of the database to connect to.
+            state_name (str): The name of the state to filter cities by.
+
+        Returns:
+            None
+        """
+        db_connect = db.connect(
+            host="localhost",
+            port=3306,
+            user=db_username,
+            passwd=db_password,
+            db=db_name
+        )
+
+        with db_connect.cursor() as db_cursor:
+            db_cursor.execute("""
+                SELECT
+                    cities.id, cities.name
+                FROM
+                    cities
+                JOIN
+                    states
+                ON
+                    cities.state_id = states.id
+                WHERE
+                    states.name LIKE BINARY %(state_name)s
+                ORDER BY
+                    cities.id ASC
+            """, {
+                'state_name': state_name
+            })
+            rows_selected = db_cursor.fetchall()
+
+        if rows_selected is not None:
+            print(", ".join([row[1] for row in rows_selected]))
+
     list_cities_by_state(argv[1], argv[2], argv[3], argv[4])
