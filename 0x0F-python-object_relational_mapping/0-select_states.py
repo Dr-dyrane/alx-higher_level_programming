@@ -54,4 +54,8 @@ def list_states(db_username, db_password, db_name):
         print(row)
 
 if __name__ == '__main__':
-    list_states(argv[1], argv[2], argv[3])
+    if len(argv) != 4:
+        print("Usage: ./0-select_states.py <db_username> "
+              "<db_password> <db_name>")
+    else:
+        list_states(argv[1], argv[2], argv[3])
