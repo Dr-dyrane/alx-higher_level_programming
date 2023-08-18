@@ -9,13 +9,13 @@ provided search argument. The retrieved states are then printed to the console.
 Author: Alexander Udeogaranya
 
 Usage:
-    ./2-my_filter_states.py <db_username> <db_password> <db_name> <name_to_search>
+./2-my_filter_states.py <db_username> <db_password> <db_name> <state_name>
 
 Arguments:
     <db_username>: Username for database access.
     <db_password>: Password for database access.
     <db_name>: Name of the database to connect to.
-    <name_to_search>: The name to search for in the states.
+    <state_name>: The name to search for in the states.
 
 Example:
     ./2-my_filter_states.py root mypassword hbtn_0e_0_usa Texas
@@ -29,7 +29,7 @@ import MySQLdb as db
 from sys import argv
 
 if __name__ == '__main__':
-    def filter_states_by_name(db_username, db_password, db_name, name_to_search):
+    def filter_states_by_name(db_username, db_password, db_name, state_name):
         """
         Retrieves and lists states with names matching the provided argument
         from the specified database.
@@ -38,7 +38,7 @@ if __name__ == '__main__':
             db_username (str): Username for database access.
             db_password (str): Password for database access.
             db_name (str): Name of the database to connect to.
-            name_to_search (str): The name to search for in the states.
+            state_name (str): The name to search for in the states.
 
         Returns:
             None
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
         db_cursor.execute(
             "SELECT * FROM states WHERE name LIKE BINARY '{}' ORDER BY \
-            states.id ASC".format(name_to_search)
+            states.id ASC".format(state_name)
         )
 
         rows_selected = db_cursor.fetchall()
@@ -64,6 +64,6 @@ if __name__ == '__main__':
 
     if len(argv) != 5:
         print("Usage: ./2-my_filter_states.py <db_username> "
-              "<db_password> <db_name> <name_to_search>")
+              "<db_password> <db_name> <state_name>")
     else:
         filter_states_by_name(argv[1], argv[2], argv[3], argv[4])
