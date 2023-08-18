@@ -20,7 +20,7 @@ Explanation:
     using the provided credentials.
     It retrieves City objects along with their corresponding
     State objects from the database.
-    The retrieved data is then printed in 
+    The retrieved data is then printed in
     the format: "State: (City ID) City Name".
 
 Note:
@@ -38,7 +38,7 @@ from sqlalchemy.orm import sessionmaker
 if __name__ == "__main__":
     def fetch_and_print_cities(db_username, db_password, db_name):
         """
-        Retrieves and prints all City objects along with their 
+        Retrieves and prints all City objects along with their
         corresponding State objects.
 
         Args:

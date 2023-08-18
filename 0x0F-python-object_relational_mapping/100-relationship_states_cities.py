@@ -23,7 +23,8 @@ Explanation:
     relationships in SQLAlchemy.
 
 Note:
-    - The State and City models are assumed to be defined in separate files named
+    - The State and City models are assumed to be
+    - defined in separate files named
     `relationship_state.py` and `relationship_city.py`.
 """
 
