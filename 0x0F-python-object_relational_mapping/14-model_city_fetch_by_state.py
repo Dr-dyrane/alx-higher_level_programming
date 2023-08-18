@@ -61,6 +61,7 @@ if __name__ == "__main__":
         for city, state in results.all():
             print("{}: ({}) {}".format(state.name, city.id, city.name))
 
+        session.commit()
         session.close()
 
     if len(argv) != 4:
