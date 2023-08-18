@@ -36,34 +36,34 @@ from model_state import State, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-def get_state_id_by_name(db_username, db_password, db_name, state_name):
-    """
-    Retrieves and prints the ID of the first State object with the specified
-    name from the database.
-
-    Args:
-        db_username (str): Username for database access.
-        db_password (str): Password for database access.
-        db_name (str): Name of the database to connect to.
-        state_name (str): Name of the state to search for.
-
-    Returns:
-        None
-    """
-    db_url = f"mysql+mysqldb://{db_username}:\
-    {db_password}@localhost:3306/{db_name}"
-
-    engine = create_engine(db_url)
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    state = session.query(State).filter(State.name == state_name).first()
-    if state:
-        print(state.id)
-    else:
-        print("Not found")
-
 if __name__ == "__main__":
+    def get_state_id_by_name(db_username, db_password, db_name, state_name):
+        """
+        Retrieves and prints the ID of the first State object with the specified
+        name from the database.
+
+        Args:
+            db_username (str): Username for database access.
+            db_password (str): Password for database access.
+            db_name (str): Name of the database to connect to.
+            state_name (str): Name of the state to search for.
+
+        Returns:
+            None
+        """
+        db_url = f"mysql+mysqldb://{db_username}:\
+        {db_password}@localhost:3306/{db_name}"
+
+        engine = create_engine(db_url)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        state = session.query(State).filter(State.name == state_name).first()
+        if state:
+            print(state.id)
+        else:
+            print("Not found")
+
     if len(argv) != 5:
         print("Usage: ./10-model_state_my_get.py <db_username> "
               "<db_password> <db_name> <state_name>")

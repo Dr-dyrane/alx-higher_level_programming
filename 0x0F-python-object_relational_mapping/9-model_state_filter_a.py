@@ -34,32 +34,32 @@ from model_state import State, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-def filter_states_with_a(db_username, db_password, db_name):
-    """
-    Filters and displays State objects whose names contain the letter 'a'
-    from the specified database.
-
-    Args:
-        db_username (str): Username for database access.
-        db_password (str): Password for database access.
-        db_name (str): Name of the database to connect to.
-
-    Returns:
-        None
-    """
-    db_url = f"mysql+mysqldb://{db_username}:\
-    {db_password}@localhost:3306/{db_name}"
-
-    engine = create_engine(db_url)
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    states = session.query(State).filter(State.name.contains('a'))
-    if states:
-        for state in states:
-            print(f"{state.id}: {state.name}")
-
 if __name__ == "__main__":
+    def filter_states_with_a(db_username, db_password, db_name):
+        """
+        Filters and displays State objects whose names contain the letter 'a'
+        from the specified database.
+
+        Args:
+            db_username (str): Username for database access.
+            db_password (str): Password for database access.
+            db_name (str): Name of the database to connect to.
+
+        Returns:
+            None
+        """
+        db_url = f"mysql+mysqldb://{db_username}:\
+        {db_password}@localhost:3306/{db_name}"
+
+        engine = create_engine(db_url)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        states = session.query(State).filter(State.name.contains('a'))
+        if states:
+            for state in states:
+                print(f"{state.id}: {state.name}")
+
     if len(argv) != 4:
         print("Usage: ./9-model_state_filter_a.py <db_username> "
               "<db_password> <db_name>")

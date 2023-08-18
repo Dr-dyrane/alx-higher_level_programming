@@ -33,35 +33,35 @@ from relationship_city import City
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-def add_city_to_state(db_username, db_password, db_name):
-    """
-    Adds a City object to a State object in the database.
-
-    Args:
-        db_username (str): Username for database access.
-        db_password (str): Password for database access.
-        db_name (str): Name of the database to connect to.
-
-    Returns:
-        None
-    """
-    db_uri = f"mysql+mysqldb://{db_username}:\
-    {db_password}@localhost:3306/{db_name}"
-    engine = create_engine(db_uri)
-    Base.metadata.create_all(engine)
-    Session = sessionmaker(bind=engine)
-
-    session = Session()
-    
-    cal_state = State(name='California')
-    sfr_city = City(name='San Francisco')
-    cal_state.cities.append(sfr_city)
-
-    session.add(cal_state)
-    session.commit()
-    session.close()
-
 if __name__ == "__main__":
+    def add_city_to_state(db_username, db_password, db_name):
+        """
+        Adds a City object to a State object in the database.
+
+        Args:
+            db_username (str): Username for database access.
+            db_password (str): Password for database access.
+            db_name (str): Name of the database to connect to.
+
+        Returns:
+            None
+        """
+        db_uri = f"mysql+mysqldb://{db_username}:\
+        {db_password}@localhost:3306/{db_name}"
+        engine = create_engine(db_uri)
+        Base.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+
+        session = Session()
+        
+        cal_state = State(name='California')
+        sfr_city = City(name='San Francisco')
+        cal_state.cities.append(sfr_city)
+
+        session.add(cal_state)
+        session.commit()
+        session.close()
+
     if len(argv) != 4:
         print("Usage: ./100-relationship_state_cities.py <db_username> "
               "<db_password> <db_name>")

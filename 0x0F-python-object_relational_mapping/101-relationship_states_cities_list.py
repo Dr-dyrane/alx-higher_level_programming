@@ -34,34 +34,34 @@ from relationship_city import City
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-def list_cities_with_states(db_username, db_password, db_name):
-    """
-    Lists all City objects & their corresponding State objects
-    from the database.
-
-    Args:
-        db_username (str): Username for database access.
-        db_password (str): Password for database access.
-        db_name (str): Name of the database to connect to.
-
-    Returns:
-        None
-    """
-    db_uri = "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
-        db_username, db_password, db_name)
-    engine = create_engine(db_uri, pool_pre_ping=True)
-    Base.metadata.create_all(engine)
-
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    states = session.query(State).outerjoin(City).order_by(State.id, City.id).all()
-
-    for state in states:
-        print("{}: {}".format(state.id, state.name))
-        for city in state.cities:
-            print("    {}: {}".format(city.id, city.name))
-
 if __name__ == "__main__":
+    def list_cities_with_states(db_username, db_password, db_name):
+        """
+        Lists all City objects & their corresponding State objects
+        from the database.
+
+        Args:
+            db_username (str): Username for database access.
+            db_password (str): Password for database access.
+            db_name (str): Name of the database to connect to.
+
+        Returns:
+            None
+        """
+        db_uri = "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
+            db_username, db_password, db_name)
+        engine = create_engine(db_uri, pool_pre_ping=True)
+        Base.metadata.create_all(engine)
+
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        states = session.query(State).outerjoin(City).order_by(State.id, City.id).all()
+
+        for state in states:
+            print("{}: {}".format(state.id, state.name))
+            for city in state.cities:
+                print("    {}: {}".format(city.id, city.name))
+
     db_username, db_password, db_name = sys.argv[1:4]
     list_cities_with_states(db_username, db_password, db_name)

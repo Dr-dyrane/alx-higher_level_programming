@@ -36,6 +36,7 @@ from sqlalchemy.ext.declarative import declarative_base
 # Declare the base class for declarative class definitions
 Base = declarative_base()
 
+
 class State(Base):
     """State class representing a state entity in a database table.
 
