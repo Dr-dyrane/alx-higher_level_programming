@@ -4,6 +4,22 @@ This script retrieves and displays a list of states from a specified database.
 It establishes a connection to the database using the provided credentials and
 fetches all rows from the 'states' table. The retrieved states are then printed
 to the console.
+
+Author: Alexander Udeogaranya
+
+Usage:
+    ./0-select_states.py <db_username> <db_password> <db_name>
+
+Arguments:
+    <db_username> (str): Username for database access.
+    <db_password> (str): Password for database access.
+    <db_name> (str): Name of the database to connect to.
+
+Example:
+    ./0-select_states.py root mypassword hbtn_0e_0_usa
+
+Output:
+    The script prints the list of states retrieved from the specified database.
 """
 
 import MySQLdb
