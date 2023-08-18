@@ -76,13 +76,8 @@ def list_cities_by_state(db_username, db_password, db_name, state_name):
         })
         rows_selected = db_cursor.fetchall()
 
-    if rows_selected:
-        city_names = ", ".join([row[1] for row in rows_selected])
-        print(f"Cities in {state_name}: {city_names}")
+    if rows_selected is not None:
+        print(", ".join([row[1] for row in rows_selected]))
 
 if __name__ == "__main__":
-    if len(argv) != 5:
-        print("Usage: ./5-filter_cities.py <db_username> <db_password> "
-              "<db_name> <state_name>")
-    else:
-        list_cities_by_state(argv[1], argv[2], argv[3], argv[4])
+    list_cities_by_state(argv[1], argv[2], argv[3], argv[4])

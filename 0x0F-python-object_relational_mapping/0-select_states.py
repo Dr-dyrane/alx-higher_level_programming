@@ -46,7 +46,7 @@ def list_states(db_username, db_password, db_name):
 
     db_cursor = db_connect.cursor()
 
-    db_cursor.execute("SELECT * FROM states")
+    db_cursor.execute("SELECT * FROM states ORDER BY id")
 
     rows_selected = db_cursor.fetchall()
 
