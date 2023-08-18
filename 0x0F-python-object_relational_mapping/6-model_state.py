@@ -36,23 +36,24 @@ import sys
 from model_state import Base, State
 from sqlalchemy import create_engine
 
-def create_database_tables(db_username, db_password, db_name):
-    # Create a database engine using SQLAlchemy
-    engine = create_engine(f'mysql+mysqldb://{db_username}:\
-                           {db_password}@localhost/{db_name}',
-                           pool_pre_ping=True)
-
-    # Create the database tables defined in the Base class
-    Base.metadata.create_all(engine)
-
-    # Notify the user that the tables have been created
-    print(f"Database tables have been created for '{db_name}' database.")
-
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: ./6-model_state.py <db_username> "
-              "<db_password> <db_name>")
-        sys.exit(1)
+    def create_database_tables(db_username, db_password, db_name):
+        # Create a database engine using SQLAlchemy
+        engine = create_engine(f'mysql+mysqldb://{db_username}:\
+                            {db_password}@localhost/{db_name}',
+                            pool_pre_ping=True)
+
+        # Create the database tables defined in the Base class
+        Base.metadata.create_all(engine)
+
+        # Notify the user that the tables have been created
+        print(f"Database tables have been created for '{db_name}' database.")
+
+
+        if len(sys.argv) != 4:
+            print("Usage: ./6-model_state.py <db_username> "
+                "<db_password> <db_name>")
+            sys.exit(1)
 
     # Extract database credentials from command-line arguments
     db_username = sys.argv[1]
