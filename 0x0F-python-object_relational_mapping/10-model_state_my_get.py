@@ -39,7 +39,7 @@ from sqlalchemy.orm import sessionmaker
 if __name__ == "__main__":
     def get_state_id_by_name(db_username, db_password, db_name, state_name):
         """
-        Retrieves and prints the ID of the first State object with the specified
+        Retrieves & prints the ID of the first State object with the specified
         name from the database.
 
         Args:
