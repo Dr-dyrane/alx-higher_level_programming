@@ -53,7 +53,7 @@ if __name__ == "__main__":
         Session = sessionmaker(bind=engine)
 
         session = Session()
-        
+
         cal_state = State(name='California')
         sfr_city = City(name='San Francisco')
         cal_state.cities.append(sfr_city)
