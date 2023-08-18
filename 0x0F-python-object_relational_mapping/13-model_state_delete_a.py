@@ -61,10 +61,7 @@ if __name__ == "__main__":
             for state in states:
                 session.delete(state)
 
-            session.commit()
-            print("State objects with names containing 'a' deleted successfully.")
-        else:
-            print("No State objects with names containing 'a' found.")
+        session.commit()
 
         session.close()
 
