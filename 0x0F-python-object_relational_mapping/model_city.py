@@ -3,7 +3,7 @@
 This script defines a City class that corresponds to a table
 in a MySQL database and works with SQLAlchemy's ORM
 """
-from model_state import Base, State
+from model_state import Base
 from sqlalchemy import Column, Integer, String, ForeignKey
 
 
