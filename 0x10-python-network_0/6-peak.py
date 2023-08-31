@@ -6,35 +6,26 @@ finds a peak in a list of unsorted integers.
 
 def find_peak(list_of_integers):
     """
-    Finds peaks in a list of unsorted integers.
+    Finds a peak in a list of unsorted integers.
 
     Args:
         list_of_integers (list): A list of integers.
 
     Returns:
-        list: A list of peak elements.
-        Returns an empty list if the input list is empty.
+        int or None: The peak element if found, None if the list is empty.
     """
-    peaks = []
-
     if not list_of_integers:
-        return peaks
+        return None
 
     low = 0
     high = len(list_of_integers) - 1
 
-    while low <= high:
+    while low < high:
         mid = (low + high) // 2
 
-        if (mid == 0 or list_of_integers[mid]
-            >= list_of_integers[mid - 1]) and (mid == len(list_of_integers) - 1
-                                               or list_of_integers[mid]
-                                               >= list_of_integers[mid + 1]):
-                peaks.append(list_of_integers[mid])
-
-        if mid > 0 and list_of_integers[mid - 1] > list_of_integers[mid]:
-            high = mid - 1
+        if list_of_integers[mid] > list_of_integers[mid + 1]:
+            high = mid
         else:
             low = mid + 1
 
-    return peaks
+    return list_of_integers[low]
