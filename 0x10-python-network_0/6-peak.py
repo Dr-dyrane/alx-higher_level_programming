@@ -12,7 +12,8 @@ def find_peak(list_of_integers):
         list_of_integers (list): A list of integers.
 
     Returns:
-        list: A list of peak elements. Returns an empty list if the input list is empty.
+        list: A list of peak elements.
+        Returns an empty list if the input list is empty.
     """
     peaks = []
 
@@ -25,10 +26,12 @@ def find_peak(list_of_integers):
     while low <= high:
         mid = (low + high) // 2
 
-        if (mid == 0 or list_of_integers[mid] >= list_of_integers[mid - 1]) and \
-           (mid == len(list_of_integers) - 1 or list_of_integers[mid] >= list_of_integers[mid + 1]):
-            peaks.append(list_of_integers[mid])
-        
+        if (mid == 0 or list_of_integers[mid]
+            >= list_of_integers[mid - 1]) and (mid == len(list_of_integers) - 1
+                                               or list_of_integers[mid]
+                                               >= list_of_integers[mid + 1]):
+                peaks.append(list_of_integers[mid])
+
         if mid > 0 and list_of_integers[mid - 1] > list_of_integers[mid]:
             high = mid - 1
         else:
