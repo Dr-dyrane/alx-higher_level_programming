@@ -6,7 +6,7 @@ finds a peak in a list of unsorted integers.
 
 def find_peak(list_of_integers):
     """
-    Finds a peak in a list of unsorted integers.
+    Find a peak in a list of unsorted integers.
 
     Args:
         list_of_integers (list): A list of integers.
@@ -14,18 +14,30 @@ def find_peak(list_of_integers):
     Returns:
         int or None: The peak element if found, None if the list is empty.
     """
+
+    # If the input list is empty, return None
     if not list_of_integers:
         return None
 
-    low = 0
-    high = len(list_of_integers) - 1
+    # Calculate the length of the input list
+    length = len(list_of_integers)
 
-    while low < high:
-        mid = (low + high) // 2
+    # Calculate the middle index
+    mid = length // 2
 
-        if list_of_integers[mid] > list_of_integers[mid + 1]:
-            high = mid
-        else:
-            low = mid + 1
+    # Assign a more descriptive variable name
+    integers = list_of_integers
 
-    return list_of_integers[low]
+    # Check if the middle element is a peak
+    if (mid == 0 or integers[mid] >= integers[mid - 1]) and \
+       (mid == length - 1 or integers[mid] >= integers[mid + 1]):
+        return integers[mid]
+
+    # If the middle element is smaller than the previous element,
+    # search in the left half
+    if mid > 0 and integers[mid - 1] > integers[mid]:
+        return find_peak(integers[:mid])
+
+    # Otherwise, search in the right half
+    return find_peak(integers[mid + 1:])
+
