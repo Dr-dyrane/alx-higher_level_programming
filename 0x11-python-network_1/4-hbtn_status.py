@@ -14,10 +14,6 @@ if __name__ == "__main__":
     # Send a GET request to the URL
     response = requests.get(url)
 
-    # Get the response content and type
-    content = response.text
-    content_type = type(content).__name__
-
     print("Body response:")
-    print("    - type:", content_type)
-    print("    - content:", content)
+    print("\t- type: {}".format(type(response.text)))
+    print("\t- content: {}".format(response.text))
