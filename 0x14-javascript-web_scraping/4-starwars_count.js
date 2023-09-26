@@ -7,7 +7,7 @@ const request = require('request');
  * @param {string} apiUrl - The API URL of the Star Wars API films endpoint.
  * @param {number} characterId - The ID of the character "Wedge Antilles."
  */
-function countMoviesWithWedgeAntilles (apiUrl, characterId) {
+function countMoviesWithWedgeAntilles(apiUrl, characterId) {
   // Send a GET request to the provided API URL
   request(apiUrl, (error, response, body) => {
     if (error) {
@@ -20,13 +20,16 @@ function countMoviesWithWedgeAntilles (apiUrl, characterId) {
       // Parse the JSON response
       const filmsData = JSON.parse(body);
 
-      // Filter films where "Wedge Antilles" is present
-      const filmsWithWedgeAntilles = filmsData.results.filter((film) => {
-        return film.characters.includes(characterId);
-      });
+      // Count movies where "Wedge Antilles" is present
+      let count = 0;
+      for (const film of filmsData.results) {
+        if (film.characters.includes(characterId)) {
+          count += 1;
+        }
+      }
 
       // Print the number of films
-      console.log(filmsWithWedgeAntilles.length);
+      console.log(count);
     } else {
       console.error(`Error: ${response.statusCode}`);
       process.exit(1);
