@@ -1,5 +1,6 @@
 #!/usr/bin/node
 const request = require('request');
+let count = 0;
 
 /**
  * Print the number of movies where the character "Wedge Antilles" is present.
@@ -9,30 +10,26 @@ const request = require('request');
  */
 function countMoviesWithWedgeAntilles (apiUrl, characterId) {
   // Send a GET request to the provided API URL
-  request(apiUrl, (error, response, body) => {
+  request.get(apiUrl, (error, response, body) => {
     if (error) {
       // Print the error object if there was an error with the request
       console.error(error);
       process.exit(1);
-    }
-
-    if (response.statusCode === 200) {
-      // Parse the JSON response
-      const filmsData = JSON.parse(body);
-
-      // Count movies where "Wedge Antilles" is present
-      let count = 0;
-      for (const film of filmsData.results) {
-        if (film.characters.includes(characterId)) {
-          count += 1;
-        }
-      }
-
-      // Print the number of films
-      console.log(count);
     } else {
-      console.error(`Error: ${response.statusCode}`);
-      process.exit(1);
+      // Parse the JSON response
+      const data = JSON.parse(body);
+
+      // Iterate through the films and characters data
+      data.results.forEach((film) => {
+        film.characters.forEach((character) => {
+          // Check if the character ID includes the specified ID
+          if (character.includes(characterId)) {
+            count += 1;
+          }
+        });
+      });
+      // Print the final count of movies with "Wedge Antilles"
+      console.log(count);
     }
   });
 }
