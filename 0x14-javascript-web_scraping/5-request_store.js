@@ -23,7 +23,7 @@ function requestAndStoreWebpage (url, file) {
           console.error(err);
           process.exit(1);
         }
-        console.log(`Downloaded and saved to ${file}`);
+        //console.log(`Downloaded and saved to ${file}`);
       });
     }
   });
