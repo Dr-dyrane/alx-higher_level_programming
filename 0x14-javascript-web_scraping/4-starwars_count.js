@@ -7,7 +7,7 @@ const request = require('request');
  * @param {string} apiUrl - The API URL of the Star Wars API films endpoint.
  * @param {number} characterId - The ID of the character "Wedge Antilles."
  */
-function countMoviesWithWedgeAntilles(apiUrl, characterId) {
+function countMoviesWithWedgeAntilles (apiUrl, characterId) {
   // Send a GET request to the provided API URL
   request(apiUrl, (error, response, body) => {
     if (error) {
