@@ -1,2 +1,23 @@
+# .gitignore Documentation
+
+This `.gitignore` file is used to specify patterns of files and directories that should be ignored by Git, meaning they will not be tracked or included in version control. Ignoring certain files is useful to exclude temporary or generated files, build artifacts, and other files that should not be part of the project's history.
+
+In this `.gitignore` file, we have specified a pattern to ignore a range of files named from `0-main.html` to `103-main.html`, all of which have names ending with "main.html".
+
+## Ignore Range of *main.html Files
+
+To ignore a range of files named `0-main.html` to `103-main.html`, we use the following pattern:
+
+```
 *main.html
-0-main.html
+```
+
+Explanation:
+- The asterisk `*` is a wildcard character that matches any characters in the filename.
+- `main.html` is the specific pattern we are matching, which represents files ending with "main.html".
+
+Effect:
+- All files named like `0-main.html`, `1-main.html`, `2-main.html`, ..., `103-main.html` will be ignored by Git.
+- These files will not be tracked, and changes to them will not be included in commits.
+
+By using this `.gitignore` pattern, we ensure that files with names matching the specified pattern are excluded from version control, which can be helpful for managing project files and avoiding unnecessary clutter in the repository.
